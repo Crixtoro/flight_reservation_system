@@ -2,14 +2,16 @@ package com.example.flight_reservation_system.persistence.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "flight")
 public class Flight {
     @Id
-    private String code;
-    @Column(name = "id_reservation")
-    private String idReservation;
+    @Column(name = "code_flight")
+    private String codeFlight;
+    @Column(name = "code_reservation")
+    private String codeReservation;
     private String origin;
     private String destination;
     @Column(name = "departure_date")
@@ -23,22 +25,31 @@ public class Flight {
     private SelectFlightType type;
     @Enumerated(EnumType.STRING)
     private Airline airline;
-    private String stopover;
+    @Column(name = "id_stopover")
+    private String idStopover; //Revisar el tipo de dato (si es lista)
 
-    public String getCode() {
-        return code;
+    //Creamos las relaciones entre las diferentes entidades
+    @OneToMany(mappedBy = "flight")
+    private List<Stopover> stopovers;
+
+    @OneToMany(mappedBy = "flight")
+    private List<Reservation> reservations;
+
+
+    public String getCodeFlight() {
+        return codeFlight;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodeFlight(String codeFlight) {
+        this.codeFlight = codeFlight;
     }
 
-    public String getIdReservation() {
-        return idReservation;
+    public String getCodeReservation() {
+        return codeReservation;
     }
 
-    public void setIdReservation(String idReservation) {
-        this.idReservation = idReservation;
+    public void setCodeReservation(String codeReservation) {
+        this.codeReservation = codeReservation;
     }
 
     public String getOrigin() {
@@ -105,11 +116,12 @@ public class Flight {
         this.airline = airline;
     }
 
-    public String getStopover() {
-        return stopover;
+    public String getIdStopover() {
+        return idStopover;
     }
 
-    public void setStopover(String stopover) {
-        this.stopover = stopover;
+    public void setIdStopover(String idStopover) {
+        this.idStopover = idStopover;
     }
+
 }

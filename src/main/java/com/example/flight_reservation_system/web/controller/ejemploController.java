@@ -12,4 +12,5 @@ public class ejemploController {
     public String saludo(){
         return "Hola mundo";
     }
+
 }

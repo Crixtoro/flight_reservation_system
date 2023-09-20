@@ -1,35 +1,43 @@
 package com.example.flight_reservation_system.persistence.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "passenger")
 public class Passenger {
 
     @Id
-    private Integer id;
-    private String name;
+    @Column(name = "id_passenger")
+    private String idPassenger;
+    @Column(name = "first_name")
+    private String firstName;
     @Column(name = "last_name")
     private String lastName;
     private String nationality;
+    private String email;
+    private String phone;
 
-    public Integer getId() {
-        return id;
+    //Creamos las relaciones de las entidades
+    @OneToMany(mappedBy = "passenger")
+    private List<Itinerary> itineraries;
+    @OneToMany(mappedBy = "passenger")
+    private List<Reservation> reservations;
+
+    public String getIdPassenger() {
+        return idPassenger;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdPassenger(String idPassenger) {
+        this.idPassenger = idPassenger;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -46,5 +54,21 @@ public class Passenger {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -8,18 +8,23 @@ import java.time.LocalTime;
 @Table(name = "stopover")
 public class Stopover {
     @Id
-    private String id;
+    @Column(name = "id_stopover")
+    private String idStopover;
     private String city;
     @Column(name = "arrival_date")
     private LocalDateTime arrivalDate;
-    private LocalDateTime timeout;
 
-    public String getId() {
-        return id;
+    //Creamos las relaciones entre entidades
+    @ManyToOne
+    @JoinColumn(name = "id_stopover", insertable = false, updatable = false)
+    private Flight flight;
+
+    public String getIdStopover() {
+        return idStopover;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdStopover(String idStopover) {
+        this.idStopover = idStopover;
     }
 
     public String getCity() {
@@ -38,11 +43,4 @@ public class Stopover {
         this.arrivalDate = arrivalDate;
     }
 
-    public LocalDateTime getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(LocalDateTime timeout) {
-        this.timeout = timeout;
-    }
 }
