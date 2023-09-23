@@ -22,20 +22,29 @@ public class Flight {
     @Column(name = "available_seats")
     private Integer availableSeats;
     @Enumerated(EnumType.STRING)
-    private SelectFlightType type;
+    private SelectFlightType selectFlightType;
     @Enumerated(EnumType.STRING)
     private Airline airline;
     @Column(name = "id_stopover")
     private String idStopover; //Revisar el tipo de dato (si es lista)
 
-    //Creamos las relaciones entre las diferentes entidades
+    /**
+     * Relación de uno a muchos con la entidad Stopover
+     * Una escala tiene un solo vuelo
+     */
     @OneToMany(mappedBy = "flight")
     private List<Stopover> stopovers;
 
+    /**
+     * Relación de uno a muchos...
+     */
     @OneToMany(mappedBy = "flight")
     private List<Reservation> reservations;
 
-
+    /**
+     *
+     * @return codeFlight
+     */
     public String getCodeFlight() {
         return codeFlight;
     }
@@ -100,12 +109,12 @@ public class Flight {
         this.availableSeats = availableSeats;
     }
 
-    public SelectFlightType getType() {
-        return type;
+    public SelectFlightType getSelectFlightType() {
+        return selectFlightType;
     }
 
-    public void setType(SelectFlightType type) {
-        this.type = type;
+    public void setSelectFlightType(SelectFlightType selectFlightType) {
+        this.selectFlightType = selectFlightType;
     }
 
     public Airline getAirline() {
