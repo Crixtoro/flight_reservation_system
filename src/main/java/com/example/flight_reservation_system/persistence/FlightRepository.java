@@ -2,7 +2,6 @@ package com.example.flight_reservation_system.persistence;
 
 import com.example.flight_reservation_system.persistence.crud.FlightCrudRepository;
 import com.example.flight_reservation_system.persistence.entity.Flight;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -10,6 +9,12 @@ import java.util.List;
 
 /*Con la anotación @Repository le indicamos a Spring que esta clase es la encargada de interactuar
 con la base de datos*/
+/**
+ * Este repositorio proporciona acceso a todos los datos de la tabla "Flight" en la base de datos.
+ *
+ * @author [Ana Vasquez, Luisa Guaqueta, Christian Toro]
+ * @version 1.0
+ */
 @Repository
 public class FlightRepository {
     private FlightCrudRepository flightCrudRepository;
@@ -17,10 +22,20 @@ public class FlightRepository {
     /*Creamos un método que recupere una lista con todos los vuelos que tenemos en nuestra base de datos,
     utilizamos el CrudRepository ya que es una consulta sencilla
      */
+
+    /**
+     * Encuentra todos los componentes de la tabla
+     * @return una lista de todos los vuelos
+     */
     public List<Flight> getAll() {
         return (List<Flight>) flightCrudRepository.findAll();
     }
 
+    /**
+     * Crea un vuelo
+     * @param flight el objeto con la infomación del nuevo vuelo
+     * @return el vuelo creado
+     */
     public Flight save(Flight flight){
         return flightCrudRepository.save(flight);
     }
@@ -33,10 +48,20 @@ public class FlightRepository {
      primer vuelo el código sería
        AV 0001.*/
 
+    /**
+     * Elimina un vuelo por su código
+     * @param codeFlight código del vuelo a eliminar
+     */
     public void delete(String codeFlight) {
         flightCrudRepository.deleteById(codeFlight);
     }
 
+    /**
+     * Actualiza la información de un vuelo
+     * @param codeFlight código del vuelo a actualizar
+     * @param updatedFlight datos actualizados
+     * @return objeto actualizado
+     */
     public Flight updateFlight(String codeFlight, Flight updatedFlight) {
         if (flightCrudRepository.existsById(codeFlight)) {
             updatedFlight.setCodeFlight(codeFlight);
@@ -46,11 +71,13 @@ public class FlightRepository {
         }
     }
 
-    //Creamos un segundo método pero utilizando los Query Methods
-    public List<Flight> getByCodeFlight(String codeFlight) {
-        return flightCrudRepository.findByCodeFlight(codeFlight); //Este es el método que definimos en el CRUD
-    }
-
+    /**
+     * Consulta personalizada donde buscamos un vuelo por su origen, destino y fecha de salida
+     * @param origin origen del vuelo
+     * @param destination destino del vuelo
+     * @param departureDate fecha de salida
+     * @return lista de vuelos que cumplen con la consulta
+     */
     public List<Flight> getFlightByCriteria(String origin, String destination, LocalDateTime departureDate){
         return flightCrudRepository.findByOriginAndDestinationAndDepartureDate(origin, destination, departureDate);
     }
