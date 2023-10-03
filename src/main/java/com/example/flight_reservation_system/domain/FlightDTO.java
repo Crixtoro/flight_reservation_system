@@ -1,42 +1,30 @@
-package com.example.flight_reservation_system.persistence.entity;
+package com.example.flight_reservation_system.domain;
 
-import javax.persistence.*;
+import com.example.flight_reservation_system.persistence.entity.Airline;
+import com.example.flight_reservation_system.persistence.entity.Reservation;
+import com.example.flight_reservation_system.persistence.entity.SelectFlightType;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "flight")
-public class Flight {
-    @Id
-    @Column(name = "code_flight")
+public class FlightDTO {
     private String codeFlight;
-    @Column(name = "code_reservation")
     private String codeReservation;
     private String origin;
     private String destination;
-    @Column(name = "departure_date")
     private LocalDateTime departureDate;
-    @Column(name = "arrival_date")
     private LocalDateTime arrivalDate;
     private Double price;
-    @Column(name = "available_seats")
     private Integer availableSeats;
     @Enumerated(EnumType.STRING)
     private SelectFlightType selectFlightType;
     @Enumerated(EnumType.STRING)
     private Airline airline;
-    private boolean stopover; //Revisar el tipo de dato (si es lista)
+    private boolean stopover;
+    private List<Reservation> reservationList;
 
-    /**
-     * Relación de uno a muchos...
-     */
-    @OneToMany(mappedBy = "flight")
-    private List<Reservation> reservations;
-
-    /**
-     *
-     * @return codeFlight
-     */
     public String getCodeFlight() {
         return codeFlight;
     }
@@ -125,11 +113,11 @@ public class Flight {
         this.stopover = stopover;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    public List<Reservation> getReservationList() {
+        return reservationList;
     }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 }

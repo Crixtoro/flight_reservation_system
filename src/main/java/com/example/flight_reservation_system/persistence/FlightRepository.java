@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /*Con la anotación @Repository le indicamos a Spring que esta clase es la encargada de interactuar
 con la base de datos*/
@@ -49,6 +50,16 @@ public class FlightRepository {
        AV 0001.*/
 
     /**
+     * Consulta un vuelo por si id
+     *
+     * @param codeFlight id del vuelo
+     * @return optional con la información del vuelo
+     */
+    public Optional<Flight> detailFlight(String codeFlight) {
+        return flightCrudRepository.findById(codeFlight);
+    }
+
+    /**
      * Elimina un vuelo por su código
      * @param codeFlight código del vuelo a eliminar
      */
@@ -78,8 +89,16 @@ public class FlightRepository {
      * @param departureDate fecha de salida
      * @return lista de vuelos que cumplen con la consulta
      */
-    public List<Flight> getFlightByCriteria(String origin, String destination, LocalDateTime departureDate){
-        return flightCrudRepository.findByOriginAndDestinationAndDepartureDate(origin, destination, departureDate);
+    public Optional<List<Flight>> getFlightByCriteria(String origin, String destination, LocalDateTime departureDate){
+        return Optional.ofNullable(flightCrudRepository.findByOriginAndDestinationAndDepartureDate(origin, destination, departureDate));
     }
     //la respuesta del endpoint debe ser paginada y retornar todos los datos de cada vuelo.
+
+    /**
+     *
+     * @return
+     */
+    public List<Flight> findStopover(){
+        return flightCrudRepository.findByStopover(true);
+    }
 }

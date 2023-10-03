@@ -10,18 +10,37 @@ import java.util.List;
 public class ReservationRepository {
     private ReservationCrudRepository reservationCrudRepository;
 
+    /**
+     * Obtener las reservas
+     * @return
+     */
     List<Reservation> getAllReservation() {
         return (List<Reservation>) reservationCrudRepository.findAll();
     }
 
-    Reservation save(Reservation reservation) {
+    /**
+     * Crear una reserva
+     * @param reservation
+     * @return
+     */
+    Reservation save(Reservation reservation) { // Falta
         return reservationCrudRepository.save(reservation);
     }
 
+    /**
+     * Borra una reserva
+     * @param codeReservation
+     */
     public void delete(String codeReservation) {
         reservationCrudRepository.deleteById(codeReservation);
     }
 
+    /**
+     * Actualizar una reserva
+     * @param codeReservation
+     * @param updatedReservation
+     * @return
+     */
     public Reservation updateReservation(String codeReservation, Reservation updatedReservation) {
         if(reservationCrudRepository.existsById(codeReservation)) {
             updatedReservation.setCodeReservation(codeReservation);
